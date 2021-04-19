@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Text&family=Share+Tech+Mono&family=Open+Sans&display=swap');
+body {
+  font-size: 62.5%;
+  overflow: hidden;
+  font-family: 'Share Tech Mono', Arial, Helvetica, serif;
+}
+html, body, #app, canvas, #__layout, #__nuxt {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
