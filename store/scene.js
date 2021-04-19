@@ -17,7 +17,10 @@ export const mutations = {
     state.isLoaded = isLoaded;
   },
   setDynamicAssets(state, dynamicAssets) {
-    state.dynamicAssets = dynamicAssets;
+    let temp = Object.assign([], state.dynamicAssets);
+    temp.push(dynamicAssets);
+    temp = [...new Set([...temp])];
+    state.dynamicAssets = temp;
   },
 };
 

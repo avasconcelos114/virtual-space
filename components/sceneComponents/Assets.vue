@@ -24,7 +24,7 @@ export default {
   watch: {
     dynamicAssets(newValue, oldValue) {
       if (newValue !== oldValue) {
-        this.addModels(newValue, true);
+        this.addModels([newValue[newValue.length - 1]], true);
       }
     },
   },

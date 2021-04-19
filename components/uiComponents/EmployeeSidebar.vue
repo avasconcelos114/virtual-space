@@ -67,21 +67,6 @@ export default {
             return !employee.deleted && !employee.is_bot && employee.id !== 'USLACKBOT';
           });
 
-          const imageAssets = filteredMembers.map(function (employee) {
-            const src =
-              '/thumbnail/' +
-              employee.profile.image_192
-                .replace('https://avatars.slack-edge.com/', '')
-                .replace('/', '%2F');
-            return {
-              id: employee.id,
-              src,
-            };
-          });
-          if (imageAssets.length > 0) {
-            this.$store.dispatch('scene/setDynamicAssets', imageAssets);
-          }
-
           this.fullEmployeeList = filteredMembers;
         }
       } catch (e) {

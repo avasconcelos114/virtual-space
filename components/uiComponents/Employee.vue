@@ -76,7 +76,17 @@ export default {
       return team.trim();
     },
     selectEmployee() {
+      const { employee } = this.$props;
+      const src =
+        '/thumbnail/' +
+        employee.profile.image_192
+          .replace('https://avatars.slack-edge.com/', '')
+          .replace('/', '%2F');
       this.$store.dispatch('office/setActiveEmployee', this.$props.employee);
+      this.$store.dispatch('scene/setDynamicAssets', {
+        id: employee.id,
+        src,
+      });
     },
   },
 };
