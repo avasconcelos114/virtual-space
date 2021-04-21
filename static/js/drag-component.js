@@ -20,6 +20,9 @@ AFRAME.registerComponent('aframe-drag-component', {
   init() {
     this.panStatus = STATUS.INACTIVE;
     this.rotateStatus = STATUS.INACTIVE;
+    this.zoomStatus = STATUS.INACTIVE;
+    this.startTouchX = 0;
+
     this.target = this.el;
 
     if (this.data.target) {
@@ -31,23 +34,32 @@ AFRAME.registerComponent('aframe-drag-component', {
 
   attachEventListeners() {
     const scene = this.el.sceneEl.renderer.domElement;
+    // PC gestures
     scene.addEventListener('mousedown', this.handleStartRotation.bind(this));
     scene.addEventListener('mouseup', this.handleMouseUp.bind(this));
     scene.addEventListener('mousemove', this.handleMouseMove.bind(this));
-
     scene.addEventListener('contextmenu', this.handleStartPanning.bind(this));
     scene.addEventListener('wheel', this.handleZoom.bind(this));
+
+    // Mobile gestures
     scene.addEventListener('touchstart', this.handleStartRotation.bind(this));
     scene.addEventListener('touchend', this.handleMouseUp.bind(this));
     scene.addEventListener('touchmove', this.handleTouchMove.bind(this));
+    scene.addEventListener('gesturestart', this.handleStartZoom.bind(this));
+    scene.addEventListener('gesturechange', this.handleMobileZoom.bind(this));
   },
 
   removeEventListeners() {
     window.removeEventListener('keydown', this.handleKeyboardPress);
   },
 
-  handleStartRotation() {
+  handleStartRotation(e) {
     this.data.rotateStatus = STATUS.ACTIVE;
+    this.startTouchX = e.pageX;
+  },
+
+  handleStartZoom() {
+    this.data.zoomStatus = STATUS.ACTIVE;
   },
 
   handleMouseUp() {
@@ -82,11 +94,8 @@ AFRAME.registerComponent('aframe-drag-component', {
 
   handleTouchMove(e) {
     e.preventDefault();
-    if (this.data.rotateStatus === STATUS.ACTIVE) {
-      // const offsetX = this.x_cord + e.touches[0].pageX;
-      // this.target.object3D.rotateY(offsetX * this.data.speed/1000);
-      // TODO: Add touch interactions (rotate, pan, zoom)
-    }
+    const rotationX = (this.startTouchX - e.touches[0].pageX) * -1;
+    this.target.object3D.rotateY((rotationX * this.data.speed) / 900);
   },
 
   handleZoom(e) {
@@ -98,6 +107,17 @@ AFRAME.registerComponent('aframe-drag-component', {
     if (s > 0) {
       this.target.setAttribute('scale', `${s} ${s} ${s}`);
     }
+  },
+
+  handleMobileZoom(e) {
+    e.preventDefault();
+    const scale = this.target.object3D.scale;
+    const { x } = scale;
+    const s = x - (1 - e.scale) / 14;
+
+    if (s < 0.8) return;
+    if (s > 5.5) return;
+    this.target.setAttribute('scale', `${s} ${s} ${s}`);
   },
 
   remove() {
