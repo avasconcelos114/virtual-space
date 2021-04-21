@@ -1,5 +1,6 @@
+import { resolve } from 'path';
+
 export default {
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'virtual-space',
     meta: [
@@ -21,46 +22,41 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
+  alias: {
+    scss: resolve(__dirname, './assets/scss'),
+  },
+
   ssr: false,
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~/assets/css/global'],
+  css: ['~/assets/scss/global.scss', '~/assets/scss/_mixins.scss'],
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+  styleResources: {
+    scss: ['~/assets/scss/*.scss'],
+  },
+
   plugins: [],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-    // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
-    '@nuxtjs/dotenv',
-  ],
+  buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/dotenv'],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa',
-  ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/pwa'],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
-  // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
       lang: 'en',
     },
   },
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
   serverMiddleware: ['~/server-middleware/thumbnail.js'],
+
+  server: {
+    host: '0',
+  },
 
   vue: {
     config: {

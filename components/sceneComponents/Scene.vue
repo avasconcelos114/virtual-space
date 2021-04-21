@@ -93,7 +93,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .scene__wrapper {
   flex: 4;
 }

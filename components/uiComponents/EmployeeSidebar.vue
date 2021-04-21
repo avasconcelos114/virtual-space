@@ -5,7 +5,7 @@
       <input v-model="searchValue" class="search__input" type="input" placeholder="Search..." />
     </div>
 
-    <div class="employee_wrapper">
+    <div class="employee__wrapper">
       <Employee
         v-for="(employee, index) in filteredEmployeeList || fullEmployeeList"
         :key="employee.id + index"
@@ -77,8 +77,10 @@ export default {
 };
 </script>
 
-<style scoped>
-.employee_wrapper {
+<style lang="scss" scoped>
+@import '~scss/mixins';
+
+.employee__wrapper {
   overflow-y: auto;
   height: calc(100% - 190px);
 }
@@ -105,6 +107,10 @@ export default {
   background: #25272b;
   color: #9ea3ac;
   padding: 20px;
+
+  @include respond-to(xs, sm) {
+    display: none;
+  }
 }
 .sidebar__header__text {
   font-family: 'Big Shoulders Text';

@@ -92,7 +92,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #employee__details__name {
   font-size: 22px;
   font-weight: 900;
