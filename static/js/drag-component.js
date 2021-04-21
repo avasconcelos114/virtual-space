@@ -21,7 +21,7 @@ AFRAME.registerComponent('aframe-drag-component', {
     this.panStatus = STATUS.INACTIVE;
     this.rotateStatus = STATUS.INACTIVE;
     this.zoomStatus = STATUS.INACTIVE;
-    this.startTouchX = 0;
+    this.prevRotateX = 0;
 
     this.target = this.el;
 
@@ -55,7 +55,7 @@ AFRAME.registerComponent('aframe-drag-component', {
 
   handleStartRotation(e) {
     this.data.rotateStatus = STATUS.ACTIVE;
-    this.startTouchX = e.pageX;
+    this.prevRotateX = e.pageX;
   },
 
   handleStartZoom() {
@@ -94,8 +94,18 @@ AFRAME.registerComponent('aframe-drag-component', {
 
   handleTouchMove(e) {
     e.preventDefault();
-    const rotationX = (this.startTouchX - e.touches[0].pageX) * -1;
-    this.target.object3D.rotateY((rotationX * this.data.speed) / 900);
+
+    // Calculate next rotation value;
+    const rotation = this.target.object3D.rotation;
+    const rotationY = radianToDegree(rotation.y);
+    const rotationZ = radianToDegree(rotation.z);
+
+    const offsetY = this.prevRotateX - e.touches[0].pageX > 0 ? -1 : 1;
+
+    const nextY = rotationY + offsetY;
+
+    this.target.setAttribute('rotation', `0 ${nextY} ${rotationZ}`);
+    this.prevRotateX = e.touches[0].pageX;
   },
 
   handleZoom(e) {
