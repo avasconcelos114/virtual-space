@@ -109,6 +109,7 @@ AFRAME.registerComponent('aframe-drag-component', {
   },
 
   handleZoom(e) {
+    e.preventDefault();
     const scale = this.target.object3D.scale;
     const { x } = scale;
 

@@ -1,5 +1,6 @@
 <template>
   <div class="main__wrapper">
+    <help-button />
     <Scene scene-assets-path="office" room="office">
       <a-entity
         id="office-wrapper"
@@ -53,6 +54,7 @@ import EmployeeSidebar from '../components/uiComponents/EmployeeSidebar';
 
 import EmployeeCard from '../components/sceneComponents/EmployeeCard';
 import MeetingRoomMarker from '../components/sceneComponents/MeetingRoomMarker';
+import HelpButton from '../components/uiComponents/HelpButton.vue';
 
 export default {
   components: {
@@ -60,6 +62,7 @@ export default {
     EmployeeSidebar,
     MeetingRoomMarker,
     EmployeeCard,
+    HelpButton,
   },
   data() {
     return {
